@@ -1,0 +1,53 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - App",
+            "request": "launch",
+            "mainClass": "com.WordCloud.demo.App",
+            "projectName": "com.WordCloud.demo"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - JSON",
+            "request": "launch",
+            "mainClass": "com.WordCloud.demo.JSON",
+            "projectName": "com.coludWord.demo"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - App",
+            "request": "launch",
+            "mainClass": "com.WordCloud.demo.App",
+            "projectName": "com.coludWord.demo"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - JSON",
+            "request": "launch",
+            "mainClass": "com.coludWord.demo.JSON",
+            "projectName": "com.coludWord.demo"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - getToken",
+            "request": "launch",
+            "mainClass": "com.coludWord.demo.getToken",
+            "projectName": "com.coludWord.demo"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - HttpRequest2",
+            "request": "launch",
+            "mainClass": "com.coludWord.demo.HttpRequest2",
+            "projectName": "com.coludWord.demo"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - App",
+            "request": "launch",
+            "mainClass": "com.coludWord.demo.App",
+            "projectName": "com.coludWord.demo"
+        }
+    ]
+}
