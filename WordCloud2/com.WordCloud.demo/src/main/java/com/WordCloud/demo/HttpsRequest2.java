@@ -16,9 +16,6 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 
 public class HttpsRequest2 {
-    public static void main(String[] args) {
-
-    }
 
     /**
      * 向指定URL发送GET方法的请求
@@ -41,9 +38,11 @@ public class HttpsRequest2 {
         // 创建HttpsURLConnection对象，并设置其SSLSocketFactory对象
         HttpsURLConnection httpsConn = (HttpsURLConnection) myURL.openConnection();
         httpsConn.setSSLSocketFactory(ssf);
+        // 之后和获取http的使用方法一样
 
         HttpURLConnection conn = (HttpURLConnection) myURL.openConnection();
         conn.setRequestMethod("GET");
+        // 设置通用的请求属性
         //conn.setRequestProperty("Content-type", "application/x-www-form-urlencoded;charset=UTF-8");// "application/json");
         //conn.setRequestProperty("accept", "*/*");
         conn.setRequestProperty("User-Agent","Dalvik/2.1.0 (Linux; U; Android 5.1; m1 note Build/LMY47D) (#Build; Meizu; m1 note; Flyme 6.3.0.2A; 5.1) +CoolMarket/9.6-1909191");
@@ -60,7 +59,7 @@ public class HttpsRequest2 {
         conn.setRequestProperty("X-Dark-Mode", "0");
         conn.setRequestProperty("Host", "api.coolapk.com");
         conn.setRequestProperty("Connection", "Keep-Alive");
-        //conn.setRequestProperty("Accept-Encoding", "gzip");
+        //conn.setRequestProperty("Accept-Encoding", "gzip");//如果使用了 gzip 压缩会导致返回的数据乱码
 
         // 必须设置false，否则会自动redirect到重定向后的地址
         conn.setInstanceFollowRedirects(true);

@@ -12,6 +12,9 @@ import java.util.Map;
 public class HttpRequest {
     /**
      * 向指定URL发送GET方法的请求
+     * 由于这个只支持http的get和post
+     * 因此换用了 HttpsRequest2
+     * 所以可以放心删除这个类
      * 
      * @param url
      *            发送请求的URL

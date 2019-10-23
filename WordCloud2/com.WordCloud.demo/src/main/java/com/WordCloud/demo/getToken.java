@@ -11,10 +11,10 @@ import java.util.Date;
 
 public class getToken {
 
-    public static void main(String[] args) throws UnsupportedEncodingException {
+    /*public static void main(String[] args) throws UnsupportedEncodingException {
         System.out.println(getXToken());
-    }
-
+    }*/
+    
     /**
      * 获取发送头中的X-Token
      * 
