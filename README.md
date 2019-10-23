@@ -1,5 +1,6 @@
 # Get-CoolApk-s-Fans
 自动爬取酷安(CoolApk)粉丝列表生成词云
+<br>
 Clone下来后只需要修改几个参数即可快速生成
 
 
@@ -9,6 +10,7 @@ Clone下来后只需要修改几个参数即可快速生成
 
 # 注意
 请注意这是一个Maven项目，在Clone之前请先配置好Maven环境.
+<br>
 在实际运行时请先看完在 'App.java' 中的注释后再使用
 
 
