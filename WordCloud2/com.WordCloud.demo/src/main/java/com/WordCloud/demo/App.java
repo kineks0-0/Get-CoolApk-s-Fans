@@ -30,10 +30,13 @@ public class App {
 
             // 请先按注释把参数修改,否则可能导致一些问题发生
             // 矩形
-            GetFansWordColud(2086596, 1000, 1000, "华康圆体W7(P)", 16, "E:\\WordCloud\\FansWordColud2.png", "E:\\WordCloud\\fansList.txt");
+            GetFansWordColud(2086596, 1000, 1000, "华康圆体W7(P)", 16, "E:\\WordCloud\\FansWordColud2.png",
+                    "E:\\WordCloud\\fansList.txt");
 
             // 使用图片为背景蒙版,使用前先把图片准备好
-            GetFansWordColud(2086596, "华康圆体W7(P)", 16, "E:\\WordCloud\\FansWordColud.png", "E:\\WordCloud\\fansList.txt", "E:\\WordCloud\\1571410668531_61da37cff600702232e0335212033656_1_6.png");
+            GetFansWordColud(2086596, "华康圆体W7(P)", 16, "E:\\WordCloud\\FansWordColud.png",
+                    "E:\\WordCloud\\fansList.txt",
+                    "E:\\WordCloud\\1571410668531_61da37cff600702232e0335212033656_1_6.png");
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -64,7 +67,8 @@ public class App {
 
             FrequencyAnalyzer frequencyAnalyzer = new FrequencyAnalyzer();
             frequencyAnalyzer.setWordFrequenciesToReturn(300);
-            frequencyAnalyzer.setMinWordLength(1);// frequencyAnalyzer.setWordTokenizer(new // ChineseWordTokenizer());//中文的解词
+            frequencyAnalyzer.setMinWordLength(1);// frequencyAnalyzer.setWordTokenizer(new //
+                                                  // ChineseWordTokenizer());//中文的解词
 
             List<WordFrequency> wordFrequencies = frequencyAnalyzer.load(OutputFanslist);
 
@@ -115,14 +119,16 @@ public class App {
 
             FrequencyAnalyzer frequencyAnalyzer = new FrequencyAnalyzer();
             frequencyAnalyzer.setWordFrequenciesToReturn(300);
-            frequencyAnalyzer.setMinWordLength(1);// frequencyAnalyzer.setWordTokenizer(new // ChineseWordTokenizer());//中文的解词
+            frequencyAnalyzer.setMinWordLength(1);// frequencyAnalyzer.setWordTokenizer(new //
+                                                  // ChineseWordTokenizer());//中文的解词
 
             List<WordFrequency> wordFrequencies = frequencyAnalyzer.load(OutputFanslist);
 
             Dimension dimension = new Dimension(width, height);
 
             WordCloud wordCloud = new WordCloud(dimension, CollisionMode.RECTANGLE);// 矩形
-            // WordCloud wordCloud = new WordCloud(dimension, CollisionMode.PIXEL_PERFECT);//完美像素 大概是完成填充
+            // WordCloud wordCloud = new WordCloud(dimension,
+            // CollisionMode.PIXEL_PERFECT);//完美像素 大概是完成填充
             wordCloud.setBackground(new RectangleBackground(dimension));
             wordCloud.setPadding(0);
             java.awt.Font font = new java.awt.Font(FontStr, Font.PLAIN, FontSize);// 设置字体,如果找不到设置的就会使用默认字体,字号请自行看情况调整

@@ -6,20 +6,20 @@ import java.io.IOException;
 import java.io.Writer;
 
 public class writeFile {
-    
-    public static void writetoFile(String FileName,String str) {
-        
+
+    public static void writetoFile(String FileName, String str) {
+
         File file = new File(FileName);
         if (!file.exists()) {
             try {
-                file.createNewFile(); //如果文件不存在则创建文件
+                file.createNewFile(); // 如果文件不存在则创建文件
             } catch (IOException e) {
                 e.printStackTrace();
-            }  
+            }
         }
-        writeInFile(file, str);   //写入文件
+        writeInFile(file, str); // 写入文件
     }
-    
+
     private static void writeInFile(File file, String content) {
         Writer writer = null;
         StringBuilder outputString = new StringBuilder();

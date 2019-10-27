@@ -11,18 +11,19 @@ import java.util.Date;
 
 public class getToken {
 
-    /*public static void main(String[] args) throws UnsupportedEncodingException {
-        System.out.println(getXToken());
-    }*/
-    
+    /*
+     * public static void main(String[] args) throws UnsupportedEncodingException {
+     * System.out.println(getXToken()); }
+     */
+
     /**
      * 获取发送头中的X-Token
      * 
      * @return 自动返回
      */
     public static String getXToken() throws UnsupportedEncodingException {
-        //不要问为什么令名不规范(
-        //参考了 https://www.jianshu.com/p/0e4f2dc0e919 的文档
+        // 不要问为什么令名不规范(
+        // 参考了 https://www.jianshu.com/p/0e4f2dc0e919 的文档
         String totken_P1 = null;
         String deviceID = "66968dc0-829e-33f2-985d-900cfa72e93a";// "8513efac-09ea-3709-b214-95b366f1a185";
         Long t2L = getTime();

@@ -13,8 +13,7 @@ public class JSON {
     /**
      * 获取用户总粉丝数
      * 
-     * @param Json
-     *            待解析的Json文本
+     * @param Json 待解析的Json文本
      * 
      * @return 返回一个文本的十进制整数
      */
@@ -35,8 +34,7 @@ public class JSON {
     /**
      * 获取一页(page)里所有粉丝的用户名,以 '\n' 分割返回
      * 
-     * @param Json
-     *            待解析的Json文本
+     * @param Json 待解析的Json文本
      * 
      * @return 返回一页(page)里所有粉丝用户名的文本,以 '\n' 分割返回
      */
@@ -58,10 +56,8 @@ public class JSON {
     /**
      * 获取所有粉丝的用户名,以 '\n' 分割返回
      * 
-     * @param UserID
-     *            用户ID
-     * @param url
-     *            Api地址
+     * @param UserID 用户ID
+     * @param url    Api地址
      * 
      * @return 返回一个所有粉丝用户名的文本,以 '\n' 分割返回
      */
@@ -76,9 +72,9 @@ public class JSON {
         Long fansNLong = Long.parseLong(getFansNumber(str));
         Long max = fansNLong / 20;
         if (fansNLong % 20 != 0) {
-            max = max +1;
+            max = max + 1;
         }
-        //计算出一共有多少页(page),为了防止溢出而使用Long类型
+        // 计算出一共有多少页(page),为了防止溢出而使用Long类型
 
         // 准备历遍所有数组得到用户名
         System.out.println("Done.");
@@ -87,7 +83,7 @@ public class JSON {
             UsersName = UsersName + getUsersName(HttpsRequest2.sendGet(url2));
 
         }
-        
+
         return UsersName;
     }
 }
