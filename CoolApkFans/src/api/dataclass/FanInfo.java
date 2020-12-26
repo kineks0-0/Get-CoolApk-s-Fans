@@ -1,6 +1,6 @@
 package api.dataclass;
 
-public class FanInfo {
+public class FanInfo implements java.io.Serializable {
     private int uid;
     private String username;
     private int fuid;

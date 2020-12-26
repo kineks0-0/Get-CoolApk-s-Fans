@@ -1,6 +1,6 @@
 package api.dataclass;
 
-public class FUserInfo {
+public class FUserInfo implements java.io.Serializable {
 
     private long uid;
     private String username;

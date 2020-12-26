@@ -11,5 +11,8 @@
     <orderEntry type="library" name="fastjson-1.2.75" level="project" />
     <orderEntry type="library" name="kumo-core-1.28" level="project" />
     <orderEntry type="library" name="kumo-tokenizers-1.28" level="project" />
+    <orderEntry type="library" name="kumo-1.2" level="project" />
+    <orderEntry type="library" name="kumo-api-1.28" level="project" />
+    <orderEntry type="library" name="kumo-cli-1.28" level="project" />
   </component>
 </module>

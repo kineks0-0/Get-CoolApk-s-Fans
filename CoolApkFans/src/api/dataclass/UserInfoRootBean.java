@@ -10,7 +10,7 @@ import java.util.List;
  * @author bejson.com (i@bejson.com)
  * @website http://www.bejson.com/java2pojo/
  */
-public class UserInfoRootBean {
+public class UserInfoRootBean implements java.io.Serializable {
 
     private List<Data> data;
     public void setData(List<Data> data) {

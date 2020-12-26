@@ -138,8 +138,11 @@ public class CoolApkFansApi {
     }
 
     public static ArrayList<String> getFansName(int userID) {
+        return getFansName(getFansData(userID));
+    }
+
+    public static ArrayList<String> getFansName(ArrayList<Data> userInfos) {
         ArrayList<String> fansName = new ArrayList<>();
-        ArrayList<Data> userInfos = getFansData(userID);
 
         final int size = userInfos.size();
         int l = 0;
