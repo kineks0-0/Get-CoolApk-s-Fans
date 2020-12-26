@@ -17,7 +17,7 @@ public class main {
             FansName.append(str).append("\n");
         }
 
-        FileWrite.write2File("src/FansNameList.txt",FansName.toString());
+        FileWrite.write2File("./FansNameList.txt",FansName.toString());
         System.out.println(FansName);
     }
 }
