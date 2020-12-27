@@ -33,6 +33,5 @@ Clone 下后只需修改几个参数即可快速生成
 
 
 # 运行输出
-![KJNvuR.png](https://s2.ax1x.com/2019/10/23/KJNvuR.png)
-![KJUNV0.png](https://s2.ax1x.com/2019/10/23/KJUNV0.png)
-![KJ8sK0.png](https://s2.ax1x.com/2019/10/23/KJ8sK0.png)
+![KJNvuR.png](https://github.com/kineks0-0/Get-CoolApk-s-Fans/blob/master/CoolApkFans/pic/FansWordCloud.png?raw=true)
+![KJUNV0.png](https://github.com/kineks0-0/Get-CoolApk-s-Fans/blob/master/CoolApkFans/pic/FansWordCloudWithImage.png?raw=true)
