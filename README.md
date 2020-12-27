@@ -1,12 +1,18 @@
 # Get-CoolApk-s-Fans
+
+---
 - 自动**爬取**酷安 (CoolApk) 粉丝列表**生成词云**
 <br>
 - Clone 下后只需修改**几个参数**即可**快速生成**
-
+---
+<br>
+<br>
 <br>
 <br>
 
 # 程序特点
+
+---
 - 只需要提供待生成的 **UserID** 即可快速生成
 <br>
 - ~~但想要美化你自己去改字体和配色~~
@@ -14,17 +20,17 @@
   
 ### 目前可以使用以下功能
 -     [x] 获取酷安粉丝Api
-- -   [x] 数据类 [采用反序列化,代码根据API生成] 
+   - -   [x] 数据类 [采用反序列化,代码根据API生成]
 -     [x] 生成词云
-- -   [x] 自定义配置
-- -   [x] 颜色,字体,背景,前景
+   - -   [x] 自定义配置
+   - -   [x] 颜色,字体,背景,前景
 -     [ ] 移植到Android [KUMO依赖Java.awt.*,无法RunOnAndroid]    
-  <br>
-      <br>
+  
+<br><br>
 
 ### 示例代码
 
-'''java
+```java
 
 
         //示例生成
@@ -104,25 +110,27 @@
                         (font,colorPalette,backgroundColor, CollisionMode.PIXEL_PERFECT, 3,
                                 background,dimension,wordCloudFilePath,wordCloudFilePath.getWordFrequencies());
 
-'''
+```
 
   <br>
   <br>
   <br>
 
 # FAQ
-### UserID在哪里？
-- 分享**用户链接**就能找到了
+   - ### UserID在哪里？
+      - 分享**用户链接**就能找到了
 
-### Api失效
-- 如果 **Token** 失效还请自己解决 （~~算法没变就抓包找 **X-App-Device** 和 **deviceID**~~）
-<br>
-- **Api** 由 **[api.CoolApkFansApi.java](https://github.com/kineks0-0/Get-CoolApk-s-Fans/blob/master/CoolApkFans/src/api/CoolApkFansApi.java)** 负责,具体问题还请自行排除 （~~或者反馈给我~~）
+   - ### Api失效
+      - 如果 **Token** 失效还请自己解决 （~~算法没变就抓包找 **X-App-Device** 和 **deviceID**~~）
 
-### 数据不会更新
-- 想要更新数据需要自己**删除** **‘./FansDataList.ser’** 文件,
 <br>
-- 默认缓存了数据就**不再向酷安爬取** 来避免被**ban**.
+
+**Api** 由 **[api.CoolApkFansApi.java](https://github.com/kineks0-0/Get-CoolApk-s-Fans/blob/master/CoolApkFans/src/api/CoolApkFansApi.java)** 负责,具体问题还请自行排除 （~~或者反馈给我~~）
+
+   - ### 数据不会更新
+      - 想要更新数据需要自己**删除** **‘./FansDataList.ser’** 文件,
+<br>
+      - 默认缓存了数据就**不再向酷安爬取** 来避免被**ban**.
 
 
 
@@ -134,7 +142,7 @@
 # 注意事项
 - ~~请注意这是一个Maven项目，在Clone之前请先配置好Maven环境.~~
 <br>
-- 现在已经用**本地jar包文件**，非 **IDEA** 可能需要自行导入jar包到项目
+- 现在采用**本地依赖jar包文件**，非 **IDEA** 可能需要自行导入jar包到项目
 <br>
 - 在实际运行前请先看完在 **'Main.java'** 中的 **注释** 后再使用
 <br>
