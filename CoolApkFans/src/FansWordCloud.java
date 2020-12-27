@@ -29,8 +29,12 @@ public class FansWordCloud {
      *
      */
     public static void getFansWordCloud(int userID, int width, int height) {
+        ArrayList<Data> fansDataList = runOnGetOldFansData(userID);
+        if (fansDataList == null) {
+            fansDataList = runOnGetNewFansData(userID);
+        }
         getFansWordCloud("黑体", 22, width, height,
-                "./pic/FansWordCloud.png",getWordFrequencies(userID));
+                "./pic/" + fansDataList.get(0).getFuid() + "-" + fansDataList.get(0).getFusername() + "-FansWordCloud.png",getWordFrequencies(userID));
     }
 
     /**
@@ -41,8 +45,12 @@ public class FansWordCloud {
      *
      */
     public static void getFansWordCloudWithImage(int userID, String backgroundImage) {
+        ArrayList<Data> fansDataList = runOnGetOldFansData(userID);
+        if (fansDataList == null) {
+            fansDataList = runOnGetNewFansData(userID);
+        }
         getFansWordCloudWithImage("黑体", 20,
-                "./pic/FansWordCloudWithImage.png",backgroundImage,getWordFrequencies(userID));
+                "./pic/" + fansDataList.get(0).getFuid() + "-" + fansDataList.get(0).getFusername() + "-FansWordCloudWithImage.png",backgroundImage,getWordFrequencies(userID));
     }
 
 
@@ -99,15 +107,17 @@ public class FansWordCloud {
         //WordCloud wordCloud = new WordCloud(dimension, CollisionMode.RECTANGLE);// 矩形
         WordCloud wordCloud = new WordCloud(dimension, CollisionMode.PIXEL_PERFECT);//完美像素 大概是尽量填充
         wordCloud.setBackground(new RectangleBackground(dimension));
-        wordCloud.setPadding(0);
+        wordCloud.setPadding(3);
         java.awt.Font font = new java.awt.Font(fontStr, Font.PLAIN, fontSize);// 设置字体,如果找不到设置的就会使用默认字体,字号请自行看情况调整
 
-        wordCloud.setColorPalette(new ColorPalette(new Color(0x5A3DFF), new Color(0x334EE0), new Color(0x29C1E7),
-                new Color(0x39D4BC), new Color(0x53C988), new Color(0xB1C15F)));//词云颜色
-        //wordCloud.setColorPalette(new ColorPalette(Color.RED, Color.GREEN, Color.YELLOW, Color.BLUE));//官方文档默认的
+        wordCloud.setColorPalette(new ColorPalette(new Color(0x1C1CD3), new Color(0x6D0090), new Color(0xB1B1FE),
+                new Color(0xF40009), new Color(0xBA0044), new Color(0xA0005D), new Color(0xFDFDFE)));//词云颜色
+
+        ////wordCloud.setColorPalette(new ColorPalette(Color.RED, Color.GREEN, Color.YELLOW, Color.BLUE));//官方文档默认的
         wordCloud.setKumoFont(new KumoFont(font));
         wordCloud.setFontScalar(new LinearFontScalar(10, 40));
-        wordCloud.setBackgroundColor(new Color(0, 0, 0));
+        wordCloud.setBackgroundColor(new Color(0, 0, 1));
+        //wordCloud.setBackgroundColor(new Color(255, 255, 255));
         wordCloud.build(wordFrequencies);
         wordCloud.writeToFile(outputFile);
     }
@@ -132,11 +142,12 @@ public class FansWordCloud {
             // WordCloud wordCloud = new WordCloud(dimension, CollisionMode.RECTANGLE);//矩形
             WordCloud wordCloud = new WordCloud(dimension, CollisionMode.PIXEL_PERFECT);// 完美像素大概指的是完成填充
             wordCloud.setBackground(new PixelBoundaryBackground(backgroundImage));// 设置背景蒙版使用图片,注意图片需要自行把不需要渲染的部分擦除成透明像素,否则会和矩形一样
-            wordCloud.setPadding(0);
+            wordCloud.setPadding(2);
             java.awt.Font font = new java.awt.Font(fontStr, Font.PLAIN, fontSize);// 设置字体,如果找不到设置的就会使用默认字体,字号请自行看情况调整
 
-            wordCloud.setColorPalette(new ColorPalette(new Color(0x5A3DFF), new Color(0x334EE0), new Color(0x29C1E7),
-                    new Color(0x39D4BC), new Color(0x53C988), new Color(0xB1C15F)));
+            wordCloud.setColorPalette(new ColorPalette(new Color(0x1C1CD3), new Color(0x6D0090), new Color(0xB1B1FE),
+                    new Color(0xF40009), new Color(0xBA0044), new Color(0xA0005D), new Color(0xFDFDFE)));//词云颜色
+
             wordCloud.setKumoFont(new KumoFont(font));
             wordCloud.setFontScalar(new LinearFontScalar(10, 40));
             wordCloud.setBackgroundColor(new Color(0, 0, 0));
