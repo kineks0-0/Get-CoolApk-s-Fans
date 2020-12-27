@@ -5,7 +5,7 @@ import com.kennycason.kumo.palette.ColorPalette;
 
 import java.awt.*;
 
-public class main {
+public final class main {
 
     public static void main(String[] args) {
 
