@@ -45,7 +45,7 @@ public class main {
         getFansWordColud("黑体", 22, 1000, 1000,
                 "./pic/FansWordCloud.png",wordFrequencies);
         getFansWordCloudWithImage("黑体", 20,
-                "./pic/FansWordCloudWithImage.png","H:\\WordCloud\\UserFace.png",wordFrequencies);
+                "./pic/FansWordCloudWithImage.png","./pic/UserFace.png",wordFrequencies);
     }
 
 
