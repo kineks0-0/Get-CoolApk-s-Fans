@@ -366,7 +366,8 @@ public class FansWordCloud {
         for (int index=0; index!=fansDataList.size(); index++) {
             userData = fansDataList.get(index);
             if (userData.getIsfriend() != 0) {
-                System.out.println("Is Friend : " + userData.getUid() + "  -  " + userData.getUsername());
+                //System.out.println("Is Friend : " + userData.getUid() + "  -  " + userData.getUsername());
+                System.out.printf("INDO: Is Friend:  %-9d %1s %s\n",userData.getUid(),"-",userData.getUsername());
                 wordFrequencies.add(new WordFrequency(userData.getUsername(), 3));
             } else {
                 wordFrequencies.add(new WordFrequency(userData.getUsername(), 1));
@@ -396,7 +397,7 @@ public class FansWordCloud {
             out.writeObject(fansData);
             out.close();
             fileOut.close();
-            System.out.print("Serialized data is saved in " + fileOut.toString());
+            System.out.println("Serialized data is saved in " + "./ser/" + userID + "-FansDataList.ser");
         } catch(IOException i) {
             i.printStackTrace();
         }
@@ -413,6 +414,7 @@ public class FansWordCloud {
             in.close();
             fileIn.close();
         } catch(IOException i) {
+            System.out.println("Wrong: Cant Load File : " + "./ser/" + userID + "-FansDataList.ser");
             i.printStackTrace();
             return null;
         } catch(ClassNotFoundException c) {

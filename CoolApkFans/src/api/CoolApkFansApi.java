@@ -115,7 +115,11 @@ public class CoolApkFansApi {
     public static ArrayList<api.dataclass.Data> getFansData(int userID) {
 
         ArrayList<Data> userInfos ;
+
+        System.out.println("INFO: Now Start Loading " + userID);
         String rawJSON = getRawCoolApkFansJson(userID,1);
+        System.out.println("INFO: Loading Page " + 1 + " (" + "NaN" + "%)");
+
         //parse POJO List对象
         Type type = new TypeReference<UserInfoRootBean>() {}.getType();
         UserInfoRootBean fansData = JSON.parseObject(rawJSON,type);
@@ -132,10 +136,14 @@ public class CoolApkFansApi {
             pageSize++;
         }
         // 计算出一共有多少页(PageSize)
-
+        double d;
         for(int i=1; i!=pageSize+1; i++){
             fansData = JSON.parseObject(getRawCoolApkFansJson(userID,i+1),type);
             userInfos.addAll(fansData.getData());
+
+            d = (i+1d) /(pageSize+1d)*100;
+            System.out.printf("INFO: Loading Page %4d %2s(%.2f%%)\n",(i+1),"",d);
+            //System.out.println("INFO: Loading Page " + (i+1) + " (" + d + "%)");
         }
 
         return userInfos;
