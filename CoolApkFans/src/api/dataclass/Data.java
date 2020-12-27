@@ -1,7 +1,7 @@
 package api.dataclass;
 
 // 这里才是 UserInfoRoot
-public class Data implements java.io.Serializable {
+public final class Data implements java.io.Serializable {
 
     private long uid;
     private String username;

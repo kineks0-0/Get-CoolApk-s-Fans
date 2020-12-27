@@ -30,13 +30,13 @@ public class FansWordCloud {
     static Color backgroundColor = new Color(0, 0, 1);
 
 
-    static class WordCloudFilePath {
-        int userID;
+    final static class WordCloudFilePath {
+        final int userID;
         int width;
         int height;
-        String name;
-        String file;
-        String path;
+        final String name;
+        final String file;
+        final String path;
         ArrayList<Data> fansDataList;
 
         public WordCloudFilePath(int userID, int width, int height, String name) {
@@ -45,23 +45,42 @@ public class FansWordCloud {
             this.height = height;
             this.name = name;
 
-            ArrayList<Data> fansDataList = runOnGetOldFansData(userID);
-            if (fansDataList == null) {
-                fansDataList = runOnGetNewFansData(userID);
-            }
+            fansDataList = getFansDataList();
+
             file = fansDataList.get(0).getFuid() + "-" + fansDataList.get(0).getFusername()
                     + "-" + width + "x" + height
                     + "-FansWordCloud" + name + ".png";
             path = "./pic/" + file;
         }
 
-
         public WordCloudFilePath(int userID, String name, String backgroundImage) {
             int[] WH = getImageWidthHeight(backgroundImage);// 获取图片的宽高
-            new WordCloudFilePath(userID,WH[0], WH[1], name);
+            this.userID = userID;
+            this.width = WH[0];
+            this.height = WH[1];
+            this.name = name;
+
+            fansDataList = getFansDataList();
+
+            file = fansDataList.get(0).getFuid() + "-" + fansDataList.get(0).getFusername()
+                    + "-" + width + "x" + height
+                    + "-FansWordCloud" + name + ".png";
+            path = "./pic/" + file;
+        }
+
+        protected ArrayList<Data> getFansDataList() {
+            ArrayList<Data> fansDataList = runOnGetOldFansData(userID);
+            if (fansDataList == null) {
+                fansDataList = runOnGetNewFansData(userID);
+            }
+            return fansDataList;
         }
 
         public List<WordFrequency> getWordFrequencies() {
+            if (fansDataList == null) {
+                System.out.println("Error: in getWordFrequencies() fansDataList == null");
+                fansDataList = getFansDataList();
+            }
             return FansWordCloud.getWordFrequencies(fansDataList);
         }
 
@@ -71,18 +90,16 @@ public class FansWordCloud {
     public static WordCloudFilePath getFansWordCloudFilePathWithName(int userID, int width, int height, String name) {
         return new WordCloudFilePath(userID,width,height,name);
     }
-
     public static WordCloudFilePath getFansWordCloudFilePath(int userID, int width, int height) {
-        return getFansWordCloudFilePathWithName(userID,width,height,"");
+        return new WordCloudFilePath(userID,width,height,"");
     }
 
 
     public static WordCloudFilePath getFansWordCloudFilePathWithImage(int userID, int width, int height) {
-        return getFansWordCloudFilePathWithName(userID,width,height,"WithImage");
+        return new WordCloudFilePath(userID,width,height,"WithImage");
     }
     public static WordCloudFilePath getFansWordCloudFilePathWithImage(int userID, String backgroundImage) {
-        int[] WH = getImageWidthHeight(backgroundImage);// 获取图片的宽高
-        return getFansWordCloudFilePathWithName(userID,WH[0], WH[1], "WithImage");
+        return new WordCloudFilePath(userID,"WithImage","WithImage");
     }
 
 
@@ -98,8 +115,7 @@ public class FansWordCloud {
      */
     public static void getFansWordCloud(int userID, int width, int height) {
         WordCloudFilePath fileName = getFansWordCloudFilePath(userID,width,height);
-        getFansWordCloud(font , width, height,
-                fileName.path,fileName.getWordFrequencies());
+        getFansWordCloud(font, width, height, fileName.path, fileName.getWordFrequencies());
     }
 
     /**
@@ -140,8 +156,7 @@ public class FansWordCloud {
      *
      */
     public static void getFansWordCloudWithImage(int userID, String outputFile, String backgroundImage) {
-        getFansWordCloudWithImage("黑体", 20,
-                outputFile,"./pic/UserFace.png",getWordFrequencies(userID));
+        getFansWordCloudWithImage("黑体", 20, outputFile,backgroundImage,getWordFrequencies(userID));
     }
 
 
@@ -357,8 +372,8 @@ public class FansWordCloud {
 
 
     //序列化的代码 一个保存 一个恢复
-    private static ArrayList<api.dataclass.Data> runOnGetNewFansData(int userID) {
-        ArrayList<api.dataclass.Data> fansData = CoolApkFansApi.getFansData(userID);
+    private static ArrayList<Data> runOnGetNewFansData(int userID) {
+        ArrayList<Data> fansData = CoolApkFansApi.getFansData(userID);
         try {
             FileOutputStream fileOut = new FileOutputStream("./ser/" + userID + "-FansDataList.ser");
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
@@ -372,12 +387,12 @@ public class FansWordCloud {
         return fansData;
     }
 
-    private static ArrayList<api.dataclass.Data> runOnGetOldFansData(int userID) {
-        ArrayList<api.dataclass.Data> fansData = null;
+    private static ArrayList<Data> runOnGetOldFansData(int userID) {
+        ArrayList<Data> fansData;
         try {
             FileInputStream fileIn = new FileInputStream("./ser/" + userID + "-FansDataList.ser");
             ObjectInputStream in = new ObjectInputStream(fileIn);
-            fansData = (ArrayList<api.dataclass.Data>) in.readObject();
+            fansData = (ArrayList<Data>) in.readObject();
             in.close();
             fileIn.close();
         } catch(IOException i) {

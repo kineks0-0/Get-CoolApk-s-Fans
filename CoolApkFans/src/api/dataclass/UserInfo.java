@@ -9,7 +9,7 @@ package api.dataclass;
  * @author bejson.com (i@bejson.com)
  * @website http://www.bejson.com/java2pojo/
  */
-public class UserInfo implements java.io.Serializable {
+public final class UserInfo implements java.io.Serializable {
 
     private long uid;
     private String username;

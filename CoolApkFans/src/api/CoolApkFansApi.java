@@ -122,6 +122,10 @@ public class CoolApkFansApi {
 
         userInfos = new ArrayList<Data>(fansData.getData());
 
+        if (fansData.getData().size() == 0){
+            System.out.println("Error: fansData size == 0");
+            System.out.println("RawData: " + rawJSON);
+        }
         int fans = fansData.getData().get(0).getFUserInfo().getFans();
         int pageSize = fans / 20;
         if (fans % 20 != 0) {
