@@ -15,7 +15,7 @@ public class HttpsRequest {
 
 
     public interface OnSetRequestMethodListener {
-        public HttpURLConnection onSetRequestMethod(HttpURLConnection conn);
+        HttpURLConnection onSetRequestMethod(HttpURLConnection conn);
     }
 
     static class MyX509TrustManager implements X509TrustManager {

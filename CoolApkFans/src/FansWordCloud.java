@@ -3,6 +3,7 @@ import api.dataclass.Data;
 import com.kennycason.kumo.CollisionMode;
 import com.kennycason.kumo.WordCloud;
 import com.kennycason.kumo.WordFrequency;
+import com.kennycason.kumo.bg.Background;
 import com.kennycason.kumo.bg.PixelBoundaryBackground;
 import com.kennycason.kumo.bg.RectangleBackground;
 import com.kennycason.kumo.font.KumoFont;
@@ -10,7 +11,6 @@ import com.kennycason.kumo.font.scale.LinearFontScalar;
 import com.kennycason.kumo.nlp.FrequencyAnalyzer;
 import com.kennycason.kumo.nlp.tokenizers.ChineseWordTokenizer;
 import com.kennycason.kumo.palette.ColorPalette;
-import io.FileWrite;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -21,24 +21,68 @@ import java.util.List;
 
 public class FansWordCloud {
 
+    //字体
+    static Font font = new Font("黑体",Font.BOLD, 22);
+    //词云颜色，越靠前的颜色权重越高
+    static ColorPalette colorPalette = new ColorPalette(new Color(0x1C1CD3), new Color(0x6D0090), new Color(0xB1B1FE),
+            new Color(0xF40009), new Color(0xBA0044), new Color(0xA0005D), new Color(0xFDFDFE));
+    //词云背景颜色
+    static Color backgroundColor = new Color(0, 0, 1);
 
-    public static String getFansWordCloudFilePathWithName(int userID, int width, int height, String name) {
-        ArrayList<Data> fansDataList = runOnGetOldFansData(userID);
-        if (fansDataList == null) {
-            fansDataList = runOnGetNewFansData(userID);
+
+    static class WordCloudFilePath {
+        int userID;
+        int width;
+        int height;
+        String name;
+        String file;
+        String path;
+        ArrayList<Data> fansDataList;
+
+        public WordCloudFilePath(int userID, int width, int height, String name) {
+            this.userID = userID;
+            this.width = width;
+            this.height = height;
+            this.name = name;
+
+            ArrayList<Data> fansDataList = runOnGetOldFansData(userID);
+            if (fansDataList == null) {
+                fansDataList = runOnGetNewFansData(userID);
+            }
+            file = fansDataList.get(0).getFuid() + "-" + fansDataList.get(0).getFusername()
+                    + "-" + width + "x" + height
+                    + "-FansWordCloud" + name + ".png";
+            path = "./pic/" + file;
         }
-        return fansDataList.get(0).getFuid() + "-" + fansDataList.get(0).getFusername()
-                + "-" + width + "x" + height
-                + "-FansWordCloud" + name + ".png";
+
+
+        public WordCloudFilePath(int userID, String name, String backgroundImage) {
+            int[] WH = getImageWidthHeight(backgroundImage);// 获取图片的宽高
+            new WordCloudFilePath(userID,WH[0], WH[1], name);
+        }
+
+        public List<WordFrequency> getWordFrequencies() {
+            return FansWordCloud.getWordFrequencies(fansDataList);
+        }
+
     }
 
-    public static String getFansWordCloudFilePath(int userID, int width, int height) {
+
+    public static WordCloudFilePath getFansWordCloudFilePathWithName(int userID, int width, int height, String name) {
+        return new WordCloudFilePath(userID,width,height,name);
+    }
+
+    public static WordCloudFilePath getFansWordCloudFilePath(int userID, int width, int height) {
         return getFansWordCloudFilePathWithName(userID,width,height,"");
     }
 
 
-    public static String getFansWordCloudFilePathWithImage(int userID, int width, int height) {
+    public static WordCloudFilePath getFansWordCloudFilePathWithImage(int userID, int width, int height) {
         return getFansWordCloudFilePathWithName(userID,width,height,"WithImage");
+    }
+    public static WordCloudFilePath getFansWordCloudFilePathWithImage(int userID, String backgroundImage) {
+        int[] WH = getImageWidthHeight(backgroundImage);// 获取图片的宽高
+        return getFansWordCloudFilePathWithName(userID,WH[0], WH[1], "WithImage");
     }
 
 
@@ -53,9 +97,9 @@ public class FansWordCloud {
      *
      */
     public static void getFansWordCloud(int userID, int width, int height) {
-        String fileName = getFansWordCloudFilePath(userID,width,height);
-        getFansWordCloud("黑体", 22, width, height,
-                "./pic/" + fileName,getWordFrequencies(userID));
+        WordCloudFilePath fileName = getFansWordCloudFilePath(userID,width,height);
+        getFansWordCloud(font , width, height,
+                fileName.path,fileName.getWordFrequencies());
     }
 
     /**
@@ -66,10 +110,9 @@ public class FansWordCloud {
      *
      */
     public static void getFansWordCloudWithImage(int userID, String backgroundImage) {
-        int[] WH = getImageWidthHeight(backgroundImage);// 获取图片的宽高
-        String fileName = getFansWordCloudFilePathWithImage(userID,WH[0],WH[1]);
+        WordCloudFilePath fileName = getFansWordCloudFilePathWithImage(userID,backgroundImage);
         getFansWordCloudWithImage("黑体", 20,
-                "./pic/" + fileName,backgroundImage,getWordFrequencies(userID));
+                fileName.path, backgroundImage,fileName.getWordFrequencies());
     }
 
 
@@ -84,7 +127,7 @@ public class FansWordCloud {
      *
      */
     public static void getFansWordCloud(int userID, int width, int height, String outputFile) {
-        getFansWordCloud("黑体", 22, width, height,
+        getFansWordCloud(font, width, height,
                 outputFile,getWordFrequencies(userID));
     }
 
@@ -116,9 +159,26 @@ public class FansWordCloud {
     public static void getFansWordCloud(String fontStr, int fontSize, int width, int height, String outputFile,
                                         List<WordFrequency> wordFrequencies) {
 
+        java.awt.Font font = new java.awt.Font(fontStr, Font.BOLD, fontSize);
+        // 设置字体,如果找不到设置的就会使用默认字体,字号请自行看情况调整
+        getFansWordCloud(font,width,height,outputFile,wordFrequencies);
+    }
+
+    /**
+     * 获取所有粉丝的用户名,之后生成词云图片(矩形)
+     *
+     * @param width           设置生成词云图片的宽
+     * @param height          设置生成词云图片的高
+     * @param font            设置使用的字体
+     * @param outputFile      设置写出的路径
+     * @param wordFrequencies 设置词云数据
+     *
+     */
+    public static void getFansWordCloud(Font font, int width, int height, String outputFile,
+                                        List<WordFrequency> wordFrequencies) {
+
         // 词云的建议去看官方文档 https://github.com/kennycason/kumo
         // 也可以自己去谷歌,不过依赖的坑文档居然没说
-
 
 
         Dimension dimension = new Dimension(width, height);
@@ -127,18 +187,54 @@ public class FansWordCloud {
         WordCloud wordCloud = new WordCloud(dimension, CollisionMode.PIXEL_PERFECT);//完美像素 大概是尽量填充
         wordCloud.setBackground(new RectangleBackground(dimension));
         wordCloud.setPadding(3);
-        java.awt.Font font = new java.awt.Font(fontStr, Font.BOLD, fontSize);// 设置字体,如果找不到设置的就会使用默认字体,字号请自行看情况调整
 
-        wordCloud.setColorPalette(new ColorPalette(new Color(0x1C1CD3), new Color(0x6D0090), new Color(0xB1B1FE),
-                new Color(0xF40009), new Color(0xBA0044), new Color(0xA0005D), new Color(0xFDFDFE)));//词云颜色
+        wordCloud.setColorPalette(colorPalette);//词云颜色
 
         ////wordCloud.setColorPalette(new ColorPalette(Color.RED, Color.GREEN, Color.YELLOW, Color.BLUE));//官方文档默认的
         wordCloud.setKumoFont(new KumoFont(font));
         wordCloud.setFontScalar(new LinearFontScalar(10, 40));
-        wordCloud.setBackgroundColor(new Color(0, 0, 1));
+        wordCloud.setBackgroundColor(backgroundColor);
         //wordCloud.setBackgroundColor(new Color(255, 255, 255));
         wordCloud.build(wordFrequencies);
         wordCloud.writeToFile(outputFile);
+    }
+
+    /**
+     * 获取所有粉丝的用户名,之后生成词云图片(矩形)
+     *
+     * @param font              设置词云图片的字体
+     * @param colorPalette      设置词云图片的配色
+     * @param backgroundColor   设置词云图片背景色
+     * @param collisionMode     设置词云如何填充字
+     * @param padding           设置词云字词间隔值
+     * @param background        设置词云画板的背景
+     * @param dimension         设置词云绘制的画板
+     * @param wordCloudFilePath 设置词云输出的配置
+     * @param wordFrequencies   设置词云数据的来源
+     *
+     */
+    public static void getFansWordCloud(Font font, ColorPalette colorPalette, Color backgroundColor,
+                                        CollisionMode collisionMode, int padding,
+                                        Background background, Dimension dimension,
+                                        WordCloudFilePath wordCloudFilePath,
+                                        List<WordFrequency> wordFrequencies) {
+
+        // 词云的建议去看官方文档 https://github.com/kennycason/kumo
+        // 也可以自己去谷歌,不过依赖的坑文档居然没说
+
+        //WordCloud wordCloud = new WordCloud(dimension, CollisionMode.RECTANGLE);// 矩形
+        WordCloud wordCloud = new WordCloud(dimension, collisionMode);//完美像素 大概是尽量填充
+        wordCloud.setBackground(background);
+        wordCloud.setPadding(padding);
+
+        wordCloud.setColorPalette(colorPalette);//词云颜色
+
+        wordCloud.setKumoFont(new KumoFont(font));
+        wordCloud.setFontScalar(new LinearFontScalar(10, 40));
+        wordCloud.setBackgroundColor(backgroundColor);
+        //wordCloud.setBackgroundColor(new Color(255, 255, 255));
+        wordCloud.build(wordFrequencies);
+        wordCloud.writeToFile(wordCloudFilePath.path);
     }
 
     /**
@@ -179,52 +275,59 @@ public class FansWordCloud {
     }
 
 
-    public static InputStream getStringStream(String sInputString){
+    public static InputStream getStringStream(String sInputString) {
         if (sInputString != null && !sInputString.trim().equals("")){
-            try{
-                return new ByteArrayInputStream(sInputString.getBytes());
-            }catch (Exception ex){
-                ex.printStackTrace();
-            }
+            return new ByteArrayInputStream(sInputString.getBytes());
         }
         return null;
     }
 
-    //返回词云list,使用 KUAM 的分词功能
-    protected static List<WordFrequency> getWordFrequenciesWithChineseWordTokenizer(int userID) {
 
-        ArrayList<Data> fansDataList = runOnGetOldFansData(userID);
-        if (fansDataList == null) {
-            fansDataList = runOnGetNewFansData(userID);
-        }
+
+    //返回词云list,使用 KUAM 的分词功能
+    protected static List<WordFrequency> getWordFrequenciesWithChineseWordTokenizer(ArrayList<Data> fansDataList, List<String> stopWords) {
 
         final FrequencyAnalyzer frequencyAnalyzer = new FrequencyAnalyzer();
         frequencyAnalyzer.setWordFrequenciesToReturn(600);
         frequencyAnalyzer.setMinWordLength(2);
         frequencyAnalyzer.setWordTokenizer(new ChineseWordTokenizer());
+        if (stopWords!=null) {
+            frequencyAnalyzer.setStopWords(stopWords);
+        }
 
         StringBuilder fansName = new StringBuilder();
         for ( String str: CoolApkFansApi.getFansName(fansDataList)) {
             fansName.append(str).append("\n");
         }
-        //FileWrite.write2File("./out/" + fansDataList.get(0).getFuid() + "-FansNameList.txt",fansName.toStrinh());
 
         try {
-            //return frequencyAnalyzer.load("./out/" + fansDataList.get(0).getFuid() + "-FansNameList.txt");
             return frequencyAnalyzer.load(getStringStream(fansName.toString()));
         } catch (IOException e) {
             e.printStackTrace();
             return null;
         }
     }
-
-    //自定义词云list,如果检查到为互相关注则提高权重为3否则为1
-    protected static List<WordFrequency> getWordFrequencies(int userID) {
-
+    //重载方法
+    protected static List<WordFrequency> getWordFrequenciesWithChineseWordTokenizer(int userID,List<String> stopWords) {
         ArrayList<Data> fansDataList = runOnGetOldFansData(userID);
         if (fansDataList == null) {
             fansDataList = runOnGetNewFansData(userID);
         }
+        return getWordFrequenciesWithChineseWordTokenizer(fansDataList,stopWords);
+    }
+    //重载方法
+    protected static List<WordFrequency> getWordFrequenciesWithChineseWordTokenizer(int userID) {
+        return getWordFrequenciesWithChineseWordTokenizer(userID,null);
+    }
+    //重载方法
+    protected static List<WordFrequency> getWordFrequenciesWithChineseWordTokenizer(ArrayList<Data> fansDataList) {
+        return getWordFrequenciesWithChineseWordTokenizer(fansDataList,null);
+    }
+
+
+
+    //自定义词云list,如果检查到为互相关注则提高权重为3否则为1
+    protected static List<WordFrequency> getWordFrequencies(ArrayList<Data> fansDataList) {
 
         List<WordFrequency> wordFrequencies = new ArrayList<>();
 
@@ -241,6 +344,17 @@ public class FansWordCloud {
         }
         return wordFrequencies;
     }
+    //重载方法
+    protected static List<WordFrequency> getWordFrequencies(int userID) {
+
+        ArrayList<Data> fansDataList = runOnGetOldFansData(userID);
+        if (fansDataList == null) {
+            fansDataList = runOnGetNewFansData(userID);
+        }
+        return getWordFrequencies(fansDataList);
+    }
+
+
 
     //序列化的代码 一个保存 一个恢复
     private static ArrayList<api.dataclass.Data> runOnGetNewFansData(int userID) {
