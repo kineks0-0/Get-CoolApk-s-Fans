@@ -1,30 +1,32 @@
 # Get-CoolApk-s-Fans
 自动**爬取**酷安 (CoolApk) 粉丝列表**生成词云**
 <br>
-Clone 下后只需修改几个参数即可**快速生成**
+Clone 下后只需修改**几个参数**即可**快速生成**
 
 
 # 特点
 只需要提供待生成的 **UserID** 即可快速生成
 <br>
+~~但想要美化就要你自己改字体和配色~~
 <br>
 
 # FAQ
 ## UserID在哪里？
-分享用户链接就能找到了
+分享**用户链接**就能找到了
 
 ## Api失效
-如果 Token失效还请自己解决 （~~算法没变就抓包找 **X-App-Device** 和 **deviceID**~~）
+如果 **Token** 失效还请自己解决 （~~算法没变就抓包找 **X-App-Device** 和 **deviceID**~~）
 <br>
-Api 由 api.CoolApkFansApi.java 负责,具体问题还请自行排除 （~~或者反馈给我~~）
+**Api** 由 **[api.CoolApkFansApi.java](https://github.com/kineks0-0/Get-CoolApk-s-Fans/blob/master/CoolApkFans/src/api/CoolApkFansApi.java)** 负责,具体问题还请自行排除 （~~或者反馈给我~~）
 
 ## 数据不会更新
-**想要更新**数据需要**自己删除** **‘./FansDataList.ser’** 文件,
+想要更新数据需要自己**删除** **‘./FansDataList.ser’** 文件,
 <br>
 默认缓存了数据就**不再向酷安爬取** 来避免被**ban**.
 
 
 
+<br>
 
 # 注意
 ~~请注意这是一个Maven项目，在Clone之前请先配置好Maven环境.~~
