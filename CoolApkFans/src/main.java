@@ -34,7 +34,7 @@ public class main {
         for (int index=0; index!=fansDataList.size(); index++) {
             userData = fansDataList.get(index);
             if (userData.getIsfriend() != 0) {
-                System.out.println(fansDataList.get(index).getUsername());
+                System.out.println("Is Friend : " + fansDataList.get(index).getUsername());
                 wordFrequencies.add(new WordFrequency(userData.getUsername(), 3));
             } else {
                 wordFrequencies.add(new WordFrequency(userData.getUsername(), 1));
@@ -102,8 +102,8 @@ public class main {
                                         List<WordFrequency> wordFrequencies) {
         try {
 
-            // 词云的建议去看官方的文档 https://github.com/kennycason/kumo
-            // 也可以去看看这个 https://blog.csdn.net/qq_14853889/article/details/79283251
+            // 词云的建议去看官方文档 https://github.com/kennycason/kumo
+            // 也可以自己去谷歌,不过依赖的坑文档居然没说
 
 
             /*final Dimension dimension = new Dimension(600, 600);
@@ -119,14 +119,14 @@ public class main {
             Dimension dimension = new Dimension(width, height);
 
             //WordCloud wordCloud = new WordCloud(dimension, CollisionMode.RECTANGLE);// 矩形
-            WordCloud wordCloud = new WordCloud(dimension, CollisionMode.PIXEL_PERFECT);//完美像素 大概是完成填充
+            WordCloud wordCloud = new WordCloud(dimension, CollisionMode.PIXEL_PERFECT);//完美像素 大概是尽量填充
             wordCloud.setBackground(new RectangleBackground(dimension));
             wordCloud.setPadding(0);
             java.awt.Font font = new java.awt.Font(fontStr, Font.PLAIN, fontSize);// 设置字体,如果找不到设置的就会使用默认字体,字号请自行看情况调整
 
             wordCloud.setColorPalette(new ColorPalette(new Color(0x5A3DFF), new Color(0x334EE0), new Color(0x29C1E7),
-                    new Color(0x39D4BC), new Color(0x53C988), new Color(0xB1C15F)));
-            //wordCloud.setColorPalette(new ColorPalette(Color.RED, Color.GREEN, Color.YELLOW, Color.BLUE));
+                    new Color(0x39D4BC), new Color(0x53C988), new Color(0xB1C15F)));//词云颜色
+            //wordCloud.setColorPalette(new ColorPalette(Color.RED, Color.GREEN, Color.YELLOW, Color.BLUE));//官方文档默认的
             wordCloud.setKumoFont(new KumoFont(font));
             wordCloud.setFontScalar(new LinearFontScalar(10, 40));
             wordCloud.setBackgroundColor(new Color(0, 0, 0));
@@ -139,7 +139,9 @@ public class main {
     }
 
 
-    static ArrayList<api.dataclass.Data> runOnGetNewFansData(int userID) {
+
+    //序列化的代码 一个保存 一个恢复
+    private static ArrayList<api.dataclass.Data> runOnGetNewFansData(int userID) {
         ArrayList<api.dataclass.Data> fansData = CoolApkFansApi.getFansData(userID);
         try {
             FileOutputStream fileOut = new FileOutputStream("FansDataList.ser");
@@ -154,7 +156,7 @@ public class main {
         return fansData;
     }
 
-    static ArrayList<api.dataclass.Data> runOnGetOldFansData() {
+    private static ArrayList<api.dataclass.Data> runOnGetOldFansData() {
         ArrayList<api.dataclass.Data> fansData = null;
         try {
             FileInputStream fileIn = new FileInputStream("FansDataList.ser");
@@ -174,6 +176,8 @@ public class main {
         return fansData;
     }
 
+
+    //获取图片宽高
     private static int[] getImageWidthHeight(String str) {
         int[] Width_Height = new int[2];
         try {

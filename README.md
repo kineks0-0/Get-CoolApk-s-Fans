@@ -4,17 +4,19 @@
 Clone 下后只需修改几个参数即可快速生成
 
 
-# 特性
-只需要提供待生成的**UserID**即可快速生成
+# 特点
+只需要提供待生成的 **UserID** 即可快速生成
 <br>
 <br>
 
 # FAQ
-## 什么UserID？
-自己分享用户链接就看到了
+## UserID在哪里？
+分享用户链接就可以找到了
 
 ## Api失效
-如果Token失效还请自己解决
+如果 Token失效还请自己解决 ~~算法没变就抓包找 X-App-Device 和 deviceID ~~
+<br>
+Api 由 api.CoolApkFansApi.java 负责,具体问题还请自行排除 ~~或者反馈给我~~
 
 ## 数据不会更新
 想要更新数据需要自己删除 **‘./FansDataList.ser’** 文件,
