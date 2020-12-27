@@ -48,5 +48,6 @@ Clone 下后只需修改**几个参数**即可**快速生成**
 
 
 # 运行输出
-![KJNvuR.png](https://github.com/kineks0-0/Get-CoolApk-s-Fans/blob/master/CoolApkFans/pic/FansWordCloud.png?raw=true)
-![KJUNV0.png](https://github.com/kineks0-0/Get-CoolApk-s-Fans/blob/master/CoolApkFans/pic/FansWordCloudWithImage.png?raw=true)
+![2086596-kineks0_0-1000x1000-FansWordCloud.png](https://github.com/kineks0-0/Get-CoolApk-s-Fans/blob/master/CoolApkFans/pic/2086596-kineks0_0-1000x1000-FansWordCloud.png?raw=true)
+![2086596-kineks0_0-1200x1062-FansWordCloudWithImage.png](https://github.com/kineks0-0/Get-CoolApk-s-Fans/blob/master/CoolApkFans/pic/2086596-kineks0_0-1200x1062-FansWordCloudWithImage.png?raw=true)
+![2086596-kineks0_0-1000x1000-FansWordCloudWithChineseWordTokenizer.png](https://github.com/kineks0-0/Get-CoolApk-s-Fans/blob/master/CoolApkFans/pic/2086596-kineks0_0-1000x1000-FansWordCloudWithChineseWordTokenizer.png?raw=true)
