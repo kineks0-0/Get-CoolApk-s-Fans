@@ -188,11 +188,8 @@ public final class main {
 本项目 参考~~复制~~ 了以下文档
 <br>
 <br>
-<br>
-[KUMO词云](https://github.com/kennycason/kumo)
-<br>
-<br>
-[Token算法](https://www.jianshu.com/p/0e4f2dc0e919)
+   - [KUMO词云](https://github.com/kennycason/kumo)
+   - [Token算法](https://www.jianshu.com/p/0e4f2dc0e919)
 <br>
 <br>
 <br>
