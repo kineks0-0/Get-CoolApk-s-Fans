@@ -82,10 +82,11 @@ public final class main {
                                 background,dimension,wordCloudFilePath,wordCloudFilePath.getWordFrequencies());
 
 
+        //以下数据量有些大
         fileNameWithChineseWordTokenizer =
                 FansWordCloud.
                         getFansWordCloudFilePathWithName
-                                (854032,1000,1000, "WithChineseWordTokenizer");
+                                (854032,800,800, "WithChineseWordTokenizer");
         FansWordCloud.
                 getFansWordCloud
                         ("黑体", 22,

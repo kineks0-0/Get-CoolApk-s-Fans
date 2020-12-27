@@ -101,7 +101,7 @@ public class FansWordCloud {
         return new WordCloudFilePath(userID,width,height,"WithImage");
     }
     public static WordCloudFilePath getFansWordCloudFilePathWithImage(int userID, String backgroundImage) {
-        return new WordCloudFilePath(userID,"WithImage","WithImage");
+        return new WordCloudFilePath(userID,"WithImage",backgroundImage);
     }
 
 
@@ -319,7 +319,7 @@ public class FansWordCloud {
     protected static List<WordFrequency> getWordFrequenciesWithChineseWordTokenizer(ArrayList<Data> fansDataList, List<String> stopWords) {
 
         final FrequencyAnalyzer frequencyAnalyzer = new FrequencyAnalyzer();
-        frequencyAnalyzer.setWordFrequenciesToReturn(600);
+        frequencyAnalyzer.setWordFrequenciesToReturn(1000);
         frequencyAnalyzer.setMinWordLength(2);
         frequencyAnalyzer.setWordTokenizer(new ChineseWordTokenizer());
         if (stopWords!=null) {
@@ -429,12 +429,15 @@ public class FansWordCloud {
     private static int[] getImageWidthHeight(String str) {
         int[] Width_Height = new int[2];
         try {
-            BufferedImage bufferedImage = ImageIO.read(new File(str));
+            BufferedImage bufferedImage = ImageIO.read(new File(str).getAbsoluteFile());
             Width_Height[0] = bufferedImage.getWidth();
             Width_Height[1] = bufferedImage.getHeight();
             return Width_Height;
         } catch (IOException e) {
             e.printStackTrace();
+            System.out.println(Width_Height[0] + " " + Width_Height[1]);
+            System.out.println(str);
+            System.out.println(new File(str).getAbsoluteFile().toString());
         }
         return Width_Height;
     }
