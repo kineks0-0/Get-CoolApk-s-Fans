@@ -14,7 +14,7 @@ Clone 下后只需修改几个参数即可快速生成
 分享用户链接就可以找到了
 
 ## Api失效
-如果 Token失效还请自己解决 ~~算法没变就抓包找 X-App-Device 和 deviceID ~~
+如果 Token失效还请自己解决 ~~算法没变就抓包找 X-App-Device 和 deviceID~~
 <br>
 Api 由 api.CoolApkFansApi.java 负责,具体问题还请自行排除 ~~或者反馈给我~~
 
