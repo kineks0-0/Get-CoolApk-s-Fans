@@ -96,16 +96,6 @@ public final class main {
                                                 (fileNameWithChineseWordTokenizer.fansDataList,null));
 
 
-        /*FansWordCloud.getFansWordCloud(3596689,800,800);
-
-        FansWordCloud.getFansWordCloud(1809499,1000,1000);
-        FansWordCloud.getFansWordCloud(2749583,1000,1000);
-        FansWordCloud.getFansWordCloud(1316828,1000,1000);
-
-        FansWordCloud.getFansWordCloud(854032,4400,4400);
-        FansWordCloud.getFansWordCloud(854032,10000,10000);
-
-        FansWordCloud.getFansWordCloud(436885,3300,3300);*/
 
     }
 
