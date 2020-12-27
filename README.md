@@ -146,6 +146,8 @@ public final class main {
   <br>
   <br>
 
+---
+
 # FAQ
    - ### UserID在哪里？
       - 分享**用户链接**就能找到了
@@ -155,19 +157,20 @@ public final class main {
 
 <br>
 
-**Api** 由 **[api.CoolApkFansApi.java](https://github.com/kineks0-0/Get-CoolApk-s-Fans/blob/master/CoolApkFans/src/api/CoolApkFansApi.java)** 负责,具体问题还请自行排除 （~~或者反馈给我~~）
+- **Api** 由 **[api.CoolApkFansApi.java](https://github.com/kineks0-0/Get-CoolApk-s-Fans/blob/master/CoolApkFans/src/api/CoolApkFansApi.java)** 负责,具体问题还请自行排除 （~~或者反馈给我~~）
 
    - ### 数据不会更新
       - 想要更新数据需要自己**删除** **‘./FansDataList.ser’** 文件,
-<br>
       - 默认缓存了数据就**不再向酷安爬取** 来避免被**ban**.
 
+<br>
 
+<br>
+<br>
+<br>
+<br>
 
-<br>
-<br>
-<br>
-<br>
+---
 
 # 注意事项
 - ~~请注意这是一个Maven项目，在Clone之前请先配置好Maven环境.~~
@@ -177,7 +180,9 @@ public final class main {
 - 在实际运行前请先看完在 **'Main.java'** 中的 **注释** 后再使用
 <br>
 - **部分情况**可能要自己抓包找 **X-App-Device** 和 **deviceID** 替换
-<br>
+<br><br><br><br>
+
+---
 
 # 引用文档
 本项目 参考~~复制~~ 了以下文档
@@ -192,6 +197,7 @@ public final class main {
 <br>
 <br>
 
+---
 
 # 运行输出
 ![2086596-kineks0_0-1000x1000-FansWordCloud.png](https://github.com/kineks0-0/Get-CoolApk-s-Fans/blob/master/CoolApkFans/pic/2086596-kineks0_0-1000x1000-FansWordCloud.png?raw=true)
