@@ -7,7 +7,10 @@ import com.kennycason.kumo.bg.PixelBoundaryBackground;
 import com.kennycason.kumo.bg.RectangleBackground;
 import com.kennycason.kumo.font.KumoFont;
 import com.kennycason.kumo.font.scale.LinearFontScalar;
+import com.kennycason.kumo.nlp.FrequencyAnalyzer;
+import com.kennycason.kumo.nlp.tokenizers.ChineseWordTokenizer;
 import com.kennycason.kumo.palette.ColorPalette;
+import io.FileWrite;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -17,6 +20,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FansWordCloud {
+
+
+    public static String getFansWordCloudFilePathWithName(int userID, int width, int height, String name) {
+        ArrayList<Data> fansDataList = runOnGetOldFansData(userID);
+        if (fansDataList == null) {
+            fansDataList = runOnGetNewFansData(userID);
+        }
+        return fansDataList.get(0).getFuid() + "-" + fansDataList.get(0).getFusername()
+                + "-" + width + "x" + height
+                + "-FansWordCloud" + name + ".png";
+    }
+
+    public static String getFansWordCloudFilePath(int userID, int width, int height) {
+        return getFansWordCloudFilePathWithName(userID,width,height,"");
+    }
+
+
+    public static String getFansWordCloudFilePathWithImage(int userID, int width, int height) {
+        return getFansWordCloudFilePathWithName(userID,width,height,"WithImage");
+    }
+
 
 
 
@@ -29,12 +53,9 @@ public class FansWordCloud {
      *
      */
     public static void getFansWordCloud(int userID, int width, int height) {
-        ArrayList<Data> fansDataList = runOnGetOldFansData(userID);
-        if (fansDataList == null) {
-            fansDataList = runOnGetNewFansData(userID);
-        }
+        String fileName = getFansWordCloudFilePath(userID,width,height);
         getFansWordCloud("黑体", 22, width, height,
-                "./pic/" + fansDataList.get(0).getFuid() + "-" + fansDataList.get(0).getFusername() + "-FansWordCloud.png",getWordFrequencies(userID));
+                "./pic/" + fileName,getWordFrequencies(userID));
     }
 
     /**
@@ -45,12 +66,10 @@ public class FansWordCloud {
      *
      */
     public static void getFansWordCloudWithImage(int userID, String backgroundImage) {
-        ArrayList<Data> fansDataList = runOnGetOldFansData(userID);
-        if (fansDataList == null) {
-            fansDataList = runOnGetNewFansData(userID);
-        }
+        int[] WH = getImageWidthHeight(backgroundImage);// 获取图片的宽高
+        String fileName = getFansWordCloudFilePathWithImage(userID,WH[0],WH[1]);
         getFansWordCloudWithImage("黑体", 20,
-                "./pic/" + fansDataList.get(0).getFuid() + "-" + fansDataList.get(0).getFusername() + "-FansWordCloudWithImage.png",backgroundImage,getWordFrequencies(userID));
+                "./pic/" + fileName,backgroundImage,getWordFrequencies(userID));
     }
 
 
@@ -159,6 +178,46 @@ public class FansWordCloud {
         }
     }
 
+
+    public static InputStream getStringStream(String sInputString){
+        if (sInputString != null && !sInputString.trim().equals("")){
+            try{
+                return new ByteArrayInputStream(sInputString.getBytes());
+            }catch (Exception ex){
+                ex.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    //返回词云list,使用 KUAM 的分词功能
+    protected static List<WordFrequency> getWordFrequenciesWithChineseWordTokenizer(int userID) {
+
+        ArrayList<Data> fansDataList = runOnGetOldFansData(userID);
+        if (fansDataList == null) {
+            fansDataList = runOnGetNewFansData(userID);
+        }
+
+        final FrequencyAnalyzer frequencyAnalyzer = new FrequencyAnalyzer();
+        frequencyAnalyzer.setWordFrequenciesToReturn(600);
+        frequencyAnalyzer.setMinWordLength(2);
+        frequencyAnalyzer.setWordTokenizer(new ChineseWordTokenizer());
+
+        StringBuilder fansName = new StringBuilder();
+        for ( String str: CoolApkFansApi.getFansName(fansDataList)) {
+            fansName.append(str).append("\n");
+        }
+        //FileWrite.write2File("./out/" + fansDataList.get(0).getFuid() + "-FansNameList.txt",fansName.toStrinh());
+
+        try {
+            //return frequencyAnalyzer.load("./out/" + fansDataList.get(0).getFuid() + "-FansNameList.txt");
+            return frequencyAnalyzer.load(getStringStream(fansName.toString()));
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     //自定义词云list,如果检查到为互相关注则提高权重为3否则为1
     protected static List<WordFrequency> getWordFrequencies(int userID) {
 
@@ -187,7 +246,7 @@ public class FansWordCloud {
     private static ArrayList<api.dataclass.Data> runOnGetNewFansData(int userID) {
         ArrayList<api.dataclass.Data> fansData = CoolApkFansApi.getFansData(userID);
         try {
-            FileOutputStream fileOut = new FileOutputStream(userID + "-FansDataList.ser");
+            FileOutputStream fileOut = new FileOutputStream("./ser/" + userID + "-FansDataList.ser");
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
             out.writeObject(fansData);
             out.close();
@@ -202,7 +261,7 @@ public class FansWordCloud {
     private static ArrayList<api.dataclass.Data> runOnGetOldFansData(int userID) {
         ArrayList<api.dataclass.Data> fansData = null;
         try {
-            FileInputStream fileIn = new FileInputStream(userID + "-FansDataList.ser");
+            FileInputStream fileIn = new FileInputStream("./ser/" + userID + "-FansDataList.ser");
             ObjectInputStream in = new ObjectInputStream(fileIn);
             fansData = (ArrayList<api.dataclass.Data>) in.readObject();
             in.close();
