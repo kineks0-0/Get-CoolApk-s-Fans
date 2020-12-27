@@ -1,4 +1,5 @@
 import api.CoolApkFansApi;
+import api.dataclass.Data;
 import com.kennycason.kumo.CollisionMode;
 import com.kennycason.kumo.WordCloud;
 import com.kennycason.kumo.WordFrequency;
@@ -21,29 +22,29 @@ public class main {
 
     public static void main(String[] args) {
 
-        ArrayList<api.dataclass.Data> fansData = runOnGetOldFansData();
-        if (fansData == null) {
-            fansData = runOnGetNewFansData(2086596);
+        ArrayList<api.dataclass.Data> fansDataList = runOnGetOldFansData();
+        if (fansDataList == null) {
+            fansDataList = runOnGetNewFansData(2086596);
         }
 
 
-        FrequencyAnalyzer frequencyAnalyzer = new FrequencyAnalyzer();
-        frequencyAnalyzer.setWordFrequenciesToReturn(600);
-        frequencyAnalyzer.setMinWordLength(2);
+        List<WordFrequency> wordFrequencies = new ArrayList<>();
 
-        //引入中文解析器
-        //frequencyAnalyzer.setWordTokenizer(new ChineseWordTokenizer());
-
-        List<WordFrequency> wordFrequencies = frequencyAnalyzer.load(CoolApkFansApi.getFansName(fansData));
-        for (int x=0; x!=wordFrequencies.size(); x++) {
-            if (fansData.get(x).getIsfriend() != 0) {
-                WordFrequency w = wordFrequencies.get(x);
-                wordFrequencies.set(x, new WordFrequency(w.getWord(), w.getFrequency()+4));
+        Data userData;
+        for (int index=0; index!=fansDataList.size(); index++) {
+            userData = fansDataList.get(index);
+            if (userData.getIsfriend() != 0) {
+                System.out.println(fansDataList.get(index).getUsername());
+                wordFrequencies.add(new WordFrequency(userData.getUsername(), 4));
+            } else {
+                wordFrequencies.add(new WordFrequency(userData.getUsername(), 1));
             }
+            //自行设置词云list,如果检查到为互相关注则提高权重为4否则为1
         }
-        getFansWordColud("黑体", 18, 2000, 2000,
+
+        getFansWordColud("黑体", 22, 1000, 1000,
                 "./FansWordCloud.png",wordFrequencies);
-        getFansWordCloudWithImage("黑体", 18,
+        getFansWordCloudWithImage("黑体", 20,
                 "./FansWordCloudWithImage.png","H:\\WordCloud\\UserFace.png",wordFrequencies);
     }
 
