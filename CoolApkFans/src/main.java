@@ -20,16 +20,6 @@ import java.util.List;
 public class main {
 
     public static void main(String[] args) {
-        //System.out.println(CoolApkFansApi.getRawCoolApkFansJson(2086596));
-        //CoolApkFansApi.getFansData(2086596);
-        //System.out.println(CoolApkFansApi.getFansName(2086596));
-        /*ArrayList<String> fansDataList = CoolApkFansApi.getFansName(2086596);
-        StringBuilder FansName = new StringBuilder();
-        for (String str:fansDataList) {
-            FansName.append(str).append("\n");
-        }
-        FileWrite.write2File("./FansNameList.txt",FansName.toString());
-        System.out.println(FansName);*/
 
         ArrayList<api.dataclass.Data> fansData = runOnGetOldFansData();
         if (fansData == null) {
@@ -44,7 +34,6 @@ public class main {
         //引入中文解析器
         //frequencyAnalyzer.setWordTokenizer(new ChineseWordTokenizer());
 
-        //List<WordFrequency> wordFrequencies = frequencyAnalyzer.load("./FansNameList.txt");
         List<WordFrequency> wordFrequencies = frequencyAnalyzer.load(CoolApkFansApi.getFansName(fansData));
         for (int x=0; x!=wordFrequencies.size(); x++) {
             if (fansData.get(x).getIsfriend() != 0) {
@@ -55,7 +44,7 @@ public class main {
         getFansWordColud("黑体", 18, 2000, 2000,
                 "./FansWordCloud.png",wordFrequencies);
         getFansWordCloudWithImage("黑体", 18,
-                "./FansWordCloud.png","H:\\WordCloud\\UserFace.png",wordFrequencies);
+                "./FansWordCloudWithImage.png","H:\\WordCloud\\UserFace.png",wordFrequencies);
     }
 
 
