@@ -35,11 +35,11 @@ public class main {
             userData = fansDataList.get(index);
             if (userData.getIsfriend() != 0) {
                 System.out.println(fansDataList.get(index).getUsername());
-                wordFrequencies.add(new WordFrequency(userData.getUsername(), 4));
+                wordFrequencies.add(new WordFrequency(userData.getUsername(), 3));
             } else {
                 wordFrequencies.add(new WordFrequency(userData.getUsername(), 1));
             }
-            //自行设置词云list,如果检查到为互相关注则提高权重为4否则为1
+            //自行设置词云list,如果检查到为互相关注则提高权重为3否则为1
         }
 
         getFansWordColud("黑体", 22, 1000, 1000,
