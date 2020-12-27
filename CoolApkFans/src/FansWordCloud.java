@@ -21,6 +21,7 @@ import java.util.List;
 
 public class FansWordCloud {
 
+    //部分默认值
     //字体
     static Font font = new Font("黑体",Font.BOLD, 22);
     //词云颜色，越靠前的颜色权重越高
@@ -30,6 +31,7 @@ public class FansWordCloud {
     static Color backgroundColor = new Color(0, 0, 1);
 
 
+    //配置词云数据来源输出
     final static class WordCloudFilePath {
         final int userID;
         int width;
@@ -87,13 +89,13 @@ public class FansWordCloud {
     }
 
 
+    //重载方法
     public static WordCloudFilePath getFansWordCloudFilePathWithName(int userID, int width, int height, String name) {
         return new WordCloudFilePath(userID,width,height,name);
     }
     public static WordCloudFilePath getFansWordCloudFilePath(int userID, int width, int height) {
         return new WordCloudFilePath(userID,width,height,"");
     }
-
 
     public static WordCloudFilePath getFansWordCloudFilePathWithImage(int userID, int width, int height) {
         return new WordCloudFilePath(userID,width,height,"WithImage");
@@ -179,6 +181,13 @@ public class FansWordCloud {
         getFansWordCloud(font,width,height,outputFile,wordFrequencies);
     }
 
+
+
+
+
+
+    //工作代码
+
     /**
      * 获取所有粉丝的用户名,之后生成词云图片(矩形)
      *
@@ -213,6 +222,9 @@ public class FansWordCloud {
         wordCloud.build(wordFrequencies);
         wordCloud.writeToFile(outputFile);
     }
+
+
+    //完全自定义
 
     /**
      * 获取所有粉丝的用户名,之后生成词云图片(矩形)
@@ -252,6 +264,7 @@ public class FansWordCloud {
         wordCloud.writeToFile(wordCloudFilePath.path);
     }
 
+
     /**
      * 获取所有粉丝的用户名,之后生成词云图片(使用图片背景蒙版) 注意使用的图片需要自行把不需要渲染的部分擦除成透明像素,否则和矩形一样
      *
@@ -290,6 +303,11 @@ public class FansWordCloud {
     }
 
 
+
+    //以下为解耦分出的代码
+
+
+    //将字串符包装为数据流
     public static InputStream getStringStream(String sInputString) {
         if (sInputString != null && !sInputString.trim().equals("")){
             return new ByteArrayInputStream(sInputString.getBytes());
@@ -297,9 +315,7 @@ public class FansWordCloud {
         return null;
     }
 
-
-
-    //返回词云list,使用 KUAM 的分词功能
+    //返回词云list,使用 KUAM 的中文分词功能
     protected static List<WordFrequency> getWordFrequenciesWithChineseWordTokenizer(ArrayList<Data> fansDataList, List<String> stopWords) {
 
         final FrequencyAnalyzer frequencyAnalyzer = new FrequencyAnalyzer();
@@ -371,7 +387,7 @@ public class FansWordCloud {
 
 
 
-    //序列化的代码 一个保存 一个恢复
+    //序列化的代码 保存
     private static ArrayList<Data> runOnGetNewFansData(int userID) {
         ArrayList<Data> fansData = CoolApkFansApi.getFansData(userID);
         try {
@@ -387,6 +403,7 @@ public class FansWordCloud {
         return fansData;
     }
 
+    //序列化的代码 恢复
     private static ArrayList<Data> runOnGetOldFansData(int userID) {
         ArrayList<Data> fansData;
         try {
@@ -421,4 +438,5 @@ public class FansWordCloud {
         }
         return Width_Height;
     }
+
 }
