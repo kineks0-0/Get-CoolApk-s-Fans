@@ -108,7 +108,7 @@ public class FansWordCloud {
         WordCloud wordCloud = new WordCloud(dimension, CollisionMode.PIXEL_PERFECT);//完美像素 大概是尽量填充
         wordCloud.setBackground(new RectangleBackground(dimension));
         wordCloud.setPadding(3);
-        java.awt.Font font = new java.awt.Font(fontStr, Font.PLAIN, fontSize);// 设置字体,如果找不到设置的就会使用默认字体,字号请自行看情况调整
+        java.awt.Font font = new java.awt.Font(fontStr, Font.BOLD, fontSize);// 设置字体,如果找不到设置的就会使用默认字体,字号请自行看情况调整
 
         wordCloud.setColorPalette(new ColorPalette(new Color(0x1C1CD3), new Color(0x6D0090), new Color(0xB1B1FE),
                 new Color(0xF40009), new Color(0xBA0044), new Color(0xA0005D), new Color(0xFDFDFE)));//词云颜色
@@ -143,7 +143,7 @@ public class FansWordCloud {
             WordCloud wordCloud = new WordCloud(dimension, CollisionMode.PIXEL_PERFECT);// 完美像素大概指的是完成填充
             wordCloud.setBackground(new PixelBoundaryBackground(backgroundImage));// 设置背景蒙版使用图片,注意图片需要自行把不需要渲染的部分擦除成透明像素,否则会和矩形一样
             wordCloud.setPadding(2);
-            java.awt.Font font = new java.awt.Font(fontStr, Font.PLAIN, fontSize);// 设置字体,如果找不到设置的就会使用默认字体,字号请自行看情况调整
+            java.awt.Font font = new java.awt.Font(fontStr, Font.BOLD, fontSize);// 设置字体,如果找不到设置的就会使用默认字体,字号请自行看情况调整
 
             wordCloud.setColorPalette(new ColorPalette(new Color(0x1C1CD3), new Color(0x6D0090), new Color(0xB1B1FE),
                     new Color(0xF40009), new Color(0xBA0044), new Color(0xA0005D), new Color(0xFDFDFE)));//词云颜色
