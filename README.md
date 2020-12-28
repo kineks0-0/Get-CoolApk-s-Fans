@@ -24,8 +24,9 @@
       - -   [x] 数据类 [采用反序列化,代码根据API生成]
    - [x] 生成词云
       - -   [x] 自定义配置
+      - -   [x] 分析数据词频
       - -   [x] 颜色,字体,背景,前景
-   - [ ] 移植到Android [KUMO依赖Java.awt.*,无法RunOnAndroid]    
+   - [ ] 移植到Android [词云库kumo依赖Java.awt.*,无法RunOnAndroid]    
   
 <br><br>
 
@@ -101,46 +102,32 @@ public final class main {
 
 
         //       输出词云文件配置       //
-
         FansWordCloud.WordCloudFilePath fansWordCloudFilePath =
                 FansWordCloud.getFansWordCloudFilePath(2086596,1000,1000);
 
-
         //           字体            //
-
         Font font = new Font("黑体",Font.BOLD, 22);
 
-
         // 词云颜色,越靠前的颜色权重越高 //
-
         ColorPalette colorPalette = new ColorPalette(new Color(0x1C1CD3), new Color(0x6D0090), new Color(0xB1B1FE),
                 new Color(0xF40009), new Color(0xBA0044), new Color(0xA0005D), new Color(0xFDFDFE));
 
-
         //        词云背景颜色        //
-
         Color backgroundColor = new Color(0, 0, 1);
 
-
         //        词云画板设置       //
-
         Dimension dimension = new Dimension(fansWordCloudFilePath.width, fansWordCloudFilePath.height);
 
 
         //       画板背景使用矩形    //
-
         Background background = new RectangleBackground(dimension);
-
 
         /*
          调用 CollisionMode 填充类型
             CollisionMode.PIXEL_PERFECT
             CollisionMode.RECTANGLE
         */
-
         //      padding 间距      //
-
-
         FansWordCloud.
                 getFansWordCloud
                         (font,colorPalette,backgroundColor, CollisionMode.PIXEL_PERFECT, 3,
