@@ -1,8 +1,11 @@
 # Get-CoolApk-s-Fans
+      *    Alpha    *   
 
----
 - 自动**爬取**酷安 (CoolApk) 粉丝列表**生成词云**
 - Clone 下后只需修改**几个参数**即可**快速生成**
+
+<br>
+
 ---
 <br>
 <br>
@@ -45,90 +48,119 @@ public final class main {
     public static void main(String[] args) {
 
 
-        //示例生成
+        /*   示例生成   */
+
+        // 默认生成矩形词云
         FansWordCloud.
-                getFansWordCloud(2086596,1000,1000,"./pic/FansWordCloud.png");
+                getFansWordCloud
+                        (2086596,1000,1000,"./pic/FansWordCloud.png");
+        // 以图片为蒙版生成, 注意图片需要把不需要渲染的部分擦除成透明像素 否则和矩形一样
         FansWordCloud.
                 getFansWordCloudWithImage
                         (2086596,"./pic/FansWordCloudWithImage.png","./pic/UserFace.png");
 
 
 
-        //快速生成
-        FansWordCloud.getFansWordCloud(2086596,1000,1000);
-        FansWordCloud.getFansWordCloudWithImage(2086596,"./pic/UserFace.png");
+
+        /*   快速生成   */
+
+        FansWordCloud.
+                getFansWordCloud
+                        (2086596,1000,1000);
+        FansWordCloud.
+                getFansWordCloudWithImage
+                        (2086596,"./pic/UserFace.png");
 
 
 
-        //自定义
-        FansWordCloud.WordCloudFilePath fileName =
-                FansWordCloud.getFansWordCloudFilePath(2086596,1000,1000);
 
-        FansWordCloud.getFansWordCloud("黑体", 22,
-                fileName.width, fileName.height, fileName.path,
-                FansWordCloud.getWordFrequencies(fileName.fansDataList));
+        /*   自定义   */
 
-        FansWordCloud.getFansWordCloud(new Font("黑体",Font.BOLD,22),
-                fileName.width, fileName.height, fileName.path,
-                FansWordCloud.getWordFrequencies(fileName.fansDataList));
+        FansWordCloud.getFansWordCloud(
+                new FansWordCloud.WordCloudFilePath(2086596,1000,1000,"",
+                        new Font("黑体", Font.BOLD, 22),null,null));
 
 
 
-        //自定义并加入中文分词
-        FansWordCloud.WordCloudFilePath fileNameWithChineseWordTokenizer =
+
+        /*   自定义和分析数据词频   */
+
+        FansWordCloud.WordCloudFilePath wordCloudFilePathWithChineseWordTokenizer =
                 FansWordCloud.
                         getFansWordCloudFilePathWithName
                                 (2086596,1000,1000, "WithChineseWordTokenizer");
         FansWordCloud.
                 getFansWordCloud
-                        ("黑体", 22,
-                                fileNameWithChineseWordTokenizer.width, fileNameWithChineseWordTokenizer.height,
-                                fileNameWithChineseWordTokenizer.path,
-                                FansWordCloud.
-                                        getWordFrequenciesWithChineseWordTokenizer
-                                                (fileNameWithChineseWordTokenizer.fansDataList,null));
+                        (wordCloudFilePathWithChineseWordTokenizer,
+                                FansWordCloud.WordCloudFilePath.WORD_FREQUENCIES_TYPE_CHINESE_WORD_TOKENIZER);
 
 
 
 
-        //完全自定义
 
-        //输出词云文件配置
-        FansWordCloud.WordCloudFilePath wordCloudFilePath =
+        /*         完全自定义          */
+
+
+        //       输出词云文件配置       //
+
+        FansWordCloud.WordCloudFilePath fansWordCloudFilePath =
                 FansWordCloud.getFansWordCloudFilePath(2086596,1000,1000);
 
-        //字体
+
+        //           字体            //
+
         Font font = new Font("黑体",Font.BOLD, 22);
-        //词云颜色，越靠前的颜色权重越高
+
+
+        // 词云颜色,越靠前的颜色权重越高 //
+
         ColorPalette colorPalette = new ColorPalette(new Color(0x1C1CD3), new Color(0x6D0090), new Color(0xB1B1FE),
                 new Color(0xF40009), new Color(0xBA0044), new Color(0xA0005D), new Color(0xFDFDFE));
-        //词云背景颜色
+
+
+        //        词云背景颜色        //
+
         Color backgroundColor = new Color(0, 0, 1);
-        //词云画板设置
-        Dimension dimension = new Dimension(wordCloudFilePath.width, wordCloudFilePath.height);
-        //画板背景使用矩形
+
+
+        //        词云画板设置       //
+
+        Dimension dimension = new Dimension(fansWordCloudFilePath.width, fansWordCloudFilePath.height);
+
+
+        //       画板背景使用矩形    //
+
         Background background = new RectangleBackground(dimension);
-        //调用 CollisionMode 为填充类型
-        // CollisionMode.PIXEL_PERFECT
-        // CollisionMode.RECTANGLE
+
+
+        /*
+         调用 CollisionMode 填充类型
+            CollisionMode.PIXEL_PERFECT
+            CollisionMode.RECTANGLE
+        */
+
+        //      padding 间距      //
+
+
         FansWordCloud.
                 getFansWordCloud
                         (font,colorPalette,backgroundColor, CollisionMode.PIXEL_PERFECT, 3,
-                                background,dimension,wordCloudFilePath,wordCloudFilePath.getWordFrequencies());
+                                background,dimension,fansWordCloudFilePath,fansWordCloudFilePath.getWordFrequencies());
 
 
-        fileNameWithChineseWordTokenizer =
+
+
+
+        /*     以下数据量有些大    */
+        /*
+        wordCloudFilePathWithChineseWordTokenizer =
                 FansWordCloud.
                         getFansWordCloudFilePathWithName
-                                (854032,1000,1000, "WithChineseWordTokenizer");
+                                (854032,800,800, "WithChineseWordTokenizer");
         FansWordCloud.
                 getFansWordCloud
-                        ("黑体", 22,
-                                fileNameWithChineseWordTokenizer.width, fileNameWithChineseWordTokenizer.height,
-                                fileNameWithChineseWordTokenizer.path,
-                                FansWordCloud.
-                                        getWordFrequenciesWithChineseWordTokenizer
-                                                (fileNameWithChineseWordTokenizer.fansDataList,null));
+                        (wordCloudFilePathWithChineseWordTokenizer,
+                                FansWordCloud.WordCloudFilePath.WORD_FREQUENCIES_TYPE_CHINESE_WORD_TOKENIZER);*/
 
 
 
@@ -173,12 +205,10 @@ public final class main {
 
 # 注意事项
 - ~~请注意这是一个Maven项目，在Clone之前请先配置好Maven环境.~~
-<br>
 - 现在采用**本地依赖jar包文件**，非 **IDEA** 可能需要自行导入jar包到项目
-<br>
 - 在实际运行前请先看完在 **'Main.java'** 中的 **注释** 后再使用
-<br>
 - **部分情况**可能要自己抓包找 **X-App-Device** 和 **deviceID** 替换
+
 <br><br><br><br>
 
 ---
