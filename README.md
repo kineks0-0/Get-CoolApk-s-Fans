@@ -99,35 +99,33 @@ public final class main {
 
 
         /*         完全自定义          */
-
-
-        //       输出词云文件配置       //
+        
+        //   输出词云文件配置
         FansWordCloud.WordCloudFilePath fansWordCloudFilePath =
                 FansWordCloud.getFansWordCloudFilePath(2086596,1000,1000);
 
-        //           字体            //
+        //   字体
         Font font = new Font("黑体",Font.BOLD, 22);
 
-        // 词云颜色,越靠前的颜色权重越高 //
+        //   词云颜色,越靠前的颜色权重越高
         ColorPalette colorPalette = new ColorPalette(new Color(0x1C1CD3), new Color(0x6D0090), new Color(0xB1B1FE),
                 new Color(0xF40009), new Color(0xBA0044), new Color(0xA0005D), new Color(0xFDFDFE));
 
-        //        词云背景颜色        //
+        //   词云背景颜色
         Color backgroundColor = new Color(0, 0, 1);
 
-        //        词云画板设置       //
+        //   词云画板设置
         Dimension dimension = new Dimension(fansWordCloudFilePath.width, fansWordCloudFilePath.height);
 
 
-        //       画板背景使用矩形    //
+        //   画板背景使用矩形
         Background background = new RectangleBackground(dimension);
-
+        //   padding 间距
         /*
-         调用 CollisionMode 填充类型
-            CollisionMode.PIXEL_PERFECT
-            CollisionMode.RECTANGLE
+            调用 CollisionMode 填充类型
+               CollisionMode.PIXEL_PERFECT
+               CollisionMode.RECTANGLE
         */
-        //      padding 间距      //
         FansWordCloud.
                 getFansWordCloud
                         (font,colorPalette,backgroundColor, CollisionMode.PIXEL_PERFECT, 3,
