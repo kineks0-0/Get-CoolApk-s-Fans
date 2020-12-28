@@ -1,8 +1,7 @@
-# Get-CoolApk-s-Fans
-      *    Alpha    *   
-
+# Get-CoolApk-s-Fans 
+> DevelopmentStatus :  Alpha
 - 自动**爬取**酷安 (CoolApk) 粉丝列表**生成词云**
-- Clone 下后只需修改**几个参数**即可**快速生成**
+- 目前正在重构该项目中
 
 <br>
 
@@ -217,8 +216,9 @@ public final class main {
 本项目 参考~~复制~~ 了以下文档
 <br>
 <br>
-   - [KUMO词云](https://github.com/kennycason/kumo)
-   - [Token算法](https://www.jianshu.com/p/0e4f2dc0e919)
+>   - [KUMO词云](https://github.com/kennycason/kumo)
+>   - [Token算法](https://www.jianshu.com/p/0e4f2dc0e919)
+
 <br>
 <br>
 <br>
